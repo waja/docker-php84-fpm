@@ -2,7 +2,7 @@
 # requires DOCKER_BUILDKIT=1 set when running docker build
 # checkov:skip=CKV_DOCKER_2: no healthcheck (yet)
 # checkov:skip=CKV_DOCKER_3: no user (yet)
-FROM php:8.4.15-fpm-alpine@sha256:74d654eccf3a4d2b132d2ddcd7ee14eb1340095fd3374bc1bd45fd06635406fe
+FROM php:8.4.15-fpm-alpine@sha256:1d91d0e851fd893885e509caff8687e3ac4c05bb4a2715eaeee33ff5597860b3
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
