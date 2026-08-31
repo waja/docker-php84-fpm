@@ -36,12 +36,6 @@ ENV EXT_DEPS \
   imagemagick-dev \
   libtool
 
-# You can also use IMAGICK_SHA as IMAGICK_URL
-#ENV IMAGICK_SHA=65e27f2bc02e7e8f1bf64e26e359e42a1331fca1
-#ARG IMAGICK_URL=$IMAGICK_SHA
-ENV IMAGICK_RELEASE=3.8.0
-ARG IMAGICK_URL=refs/tags/$IMAGICK_RELEASE
-
 WORKDIR /tmp/
 # hadolint ignore=SC2086,DL3017,DL3018,DL3003
 RUN set -xe; \
@@ -53,8 +47,8 @@ RUN set -xe; \
   && docker-php-ext-configure gd \
     --with-freetype \
     --with-jpeg \
+  && pecl install imagick \
   && NPROC="$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1)" \
-  && mkdir -p /tmp/imagick && curl -L -o /tmp/imagick.tar.gz https://github.com/Imagick/imagick/archive/${IMAGICK_URL}.tar.gz && tar --strip-components=1 -xf /tmp/imagick.tar.gz -C /tmp/imagick && cd /tmp/imagick && phpize && ./configure && make "-j${NPROC}" && make install \
   && docker-php-ext-install "-j${NPROC}" bcmath exif gd mysqli \
   && docker-php-ext-install "-j${NPROC}" zip \
   && docker-php-ext-enable bcmath exif gd imagick mysqli \
